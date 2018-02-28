@@ -2,7 +2,7 @@ arch ?= x86_64
 kernel := build/kernel-$(arch).bin
 iso := build/os-$(arch).iso
 
-GCCPARAMS = -fno-use-cxa-atexit -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore
+GCCPARAMS = -fno-use-cxa-atexit -std=c++11 -nostdlib -fno-builtin -fno-rtti -fno-exceptions -fno-leading-underscore
 linker_script := src/arch/$(arch)/linker.ld
 grub_cfg := src/arch/$(arch)/grub.cfg
 assembly_source_files := $(wildcard src/arch/$(arch)/*.asm)
@@ -19,8 +19,14 @@ all: $(kernel)
 clean:
 	@rm -r build
 
+install: $(kernel)
+	sudo cp $< /boot/kernel.bin
+
 run: $(iso)
-	@qemu-system-x86_64 -s -S -cdrom $(iso) -m 512 -monitor stdio
+	@qemu-system-x86_64 $(iso) -m 4M -monitor stdio
+
+debug: $(iso)
+	@qemu-system-x86_64 -s -S $(iso) -m 4M -monitor stdio
 
 iso: $(iso)
 
@@ -43,4 +49,4 @@ build/arch/$(arch)/%.o: src/arch/$(arch)/%.asm
 	@nasm -felf64 $< -o $@
 
 build/arch/$(arch)/%.o: src/arch/$(arch)/%.cpp
-	@gcc $(GCCPARAMS) -c -o $@ $<
+	@gcc $(GCCPARAMS) -c -g -o $@ $<
