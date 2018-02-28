@@ -15,13 +15,16 @@ gdt64:
 
 start:
   mov esp, stack_top
+  ; mov [multiboot_structure_info], ebx
+  ; mov edi, [multiboot_structure_info]
+  mov edi, ebx
+  mov esi, eax
 
   call check_multiboot
   call check_cpuid
   call check_long_mode
   call set_up_page_tables
   call enable_paging
-
 
   lgdt [gdt64.pointer]
 
@@ -32,7 +35,7 @@ start:
   hlt
 
 check_multiboot:
-  cmp eax, 0x36d76289
+  cmp eax, 0x2BADB002
   jne .no_multiboot
   ret
 .no_multiboot:
@@ -151,6 +154,8 @@ error:
   hlt
 
 section .bss
+; multiboot_structure_info:
+    ; resb 4
 align 4096
 p4_table:
     resb 4096
@@ -159,5 +164,5 @@ p3_table:
 p2_table:
     resb 4096
 stack_bottom:
-    resb 64
+    resb 4096 * 64
 stack_top:
