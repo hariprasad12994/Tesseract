@@ -1,15 +1,16 @@
 #include "types.h"
 #include "video.h"
+#include "multiboot.h"
+#include "lib.h"
 
-void checkMultiboot(){
+extern "C" void kernelMain(uint32_t multiboot_structure,
+                           uint32_t multiBootMagicNumber){
+  multibootInfo Info(multiboot_structure);
 
-}
+  primitiveVGA vga((uint8_t)Cyan, (uint8_t)Black);
+  vga.clearScreen();
+  vga.print("Hello World\n");
+  vga.print("Bootloader:%s\n",Info.bootloaderName);
 
-extern "C" void kernelMain(){
-  videoHandler handler((uint8_t)Black,(uint8_t)Cyan);
-  handler.clearScreen();
-  handler.printToScreen("booted");
-  handler.printToScreen("\n");
-  handler.printToScreen("initial screen tests - VGA mode\n");
   while(1);
 }
