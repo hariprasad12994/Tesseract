@@ -99,6 +99,7 @@ private:
   multibootInfoStruct* ptrToMultibootInfoBlock;
   bool checkFlagAvailability(multibootInformationFlag flagType);
   void parseMultiboot();
+  void panic();
 
 public:
   multibootInfo(uint32_t ptrToMultibootInfoBlock);
