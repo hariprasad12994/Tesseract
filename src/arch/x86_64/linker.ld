@@ -17,4 +17,11 @@ SECTIONS {
     /* all text sections are added here */
     *(.text*)
   }
+
+  .data :
+  {
+    /* all text sections are added here */
+    *(.data*)
+  }
+
 }
