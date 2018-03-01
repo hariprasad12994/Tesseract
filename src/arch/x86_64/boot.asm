@@ -15,10 +15,10 @@ gdt64:
 
 start:
   mov esp, stack_top
-  ; mov [multiboot_structure_info], ebx
-  ; mov edi, [multiboot_structure_info]
-  mov edi, ebx
-  mov esi, eax
+  mov [multiboot_structure_info], ebx
+  mov edi, [multiboot_structure_info]
+  ; mov edi, ebx
+  ; mov esi, eax
 
   call check_multiboot
   call check_cpuid
@@ -153,9 +153,13 @@ error:
   mov byte[0xb800a], al
   hlt
 
+
+section .data
+multiboot_structure_info:
+    resb 4
+
+
 section .bss
-; multiboot_structure_info:
-    ; resb 4
 align 4096
 p4_table:
     resb 4096
