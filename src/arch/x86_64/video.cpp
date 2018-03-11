@@ -95,7 +95,7 @@ void primitiveVGA :: printFmt(const char* str, char specifier){
   }
 }
 
-void primitiveVGA :: printFmt(int num, char specifier){
+void primitiveVGA :: printFmt(uint64_t num, char specifier){
   char* buffer;
   char temp[20];
   int base;

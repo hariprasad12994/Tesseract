@@ -50,7 +50,7 @@ private:
   functionalities are made internal to the class
   */
   void printCharToScreen(char ch);
-  void printFmt(int num, char specifier);
+  void printFmt(uint64_t num, char specifier);
   void printFmt(const char* str, char specifier);
   void scroll();
 
@@ -59,7 +59,7 @@ public:
   Public member function:
   A generic print function which behaves like standard printf is implemented using
   variadic template.
-  Public APIs are provided for printing formatted strings and clearing screen 
+  Public APIs are provided for printing formatted strings and clearing screen
   */
   primitiveVGA(uint8_t foregroundColor, uint8_t backgroundColor);
   void clearScreen();

@@ -23,10 +23,10 @@ install: $(kernel)
 	sudo cp $< /boot/kernel.bin
 
 run: $(iso)
-	@qemu-system-x86_64 $(iso) -m 4M -monitor stdio
+	@qemu-system-x86_64 $(iso) -m 32M -monitor stdio
 
 debug: $(iso)
-	@qemu-system-x86_64 -s -S $(iso) -m 4M -monitor stdio
+	@qemu-system-x86_64 -s -S $(iso) -m 32M -monitor stdio
 
 iso: $(iso)
 
